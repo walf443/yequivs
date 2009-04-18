@@ -5,6 +5,7 @@ Standards-Version: 3.6.2
 
 Package: yequivs
 Version: 0.0.2
+Description: equivs wrapper for using YAML as config format.
 Architecture: all
 Depends:
   - equivs
