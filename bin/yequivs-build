@@ -1,0 +1,48 @@
+#!/usr/bin/ruby
+
+require 'yaml'
+require 'erb'
+
+yaml = YAML.load(ARGF.read)
+erb = ERB.new(DATA.read, nil, '%')
+
+tmp_filename = yaml['Package']
+
+File.open(tmp_filename, 'w') do |f|
+  f.puts erb.result(binding)
+end
+
+system("equivs-build #{tmp_filename}")
+
+__END__
+% %w(Section Priority Standards-Version ).each do |col|
+<%= col %>: <%= yaml[col] %>
+% end
+
+% %w( Package Version Maintainer Architecture Copyright Changelog Readme ).each do |col| 
+% if yaml[col]
+<%= col %>: <%= yaml[col] %>
+% end 
+% end
+
+% %w( Pre-Depends Depends Recommends Suggests Provides Replaces Extra-Files ).each do |col|
+% if yaml[col]
+<%= col %>: <%= yaml[col].join(', ') %>
+% end
+% end
+
+% if yaml['Files']
+Files:
+% yaml['Files'].each do |key, value|
+  <%= key %> <%= value %>
+% end
+% end
+
+<% if yaml['Description'] %>
+Description: <%= yaml['Description'] %>
+<% else %>
+Description: <short description; defaults to some wise words> 
+ long description and info
+ .
+ second paragraph
+<% end %>

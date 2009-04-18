@@ -1,0 +1,15 @@
+---
+Section: misc
+Priority: optional
+Standards-Version: 3.6.2
+
+Package: yequivs
+Version: 0.0.2
+Architecture: all
+Depends:
+  - equivs
+  - ruby
+
+Files:
+  bin/yequivs-build: /usr/bin/yequivs-build
+  bin/yequivs-control: /usr/bin/yequivs-control
