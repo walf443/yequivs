@@ -1,0 +1,22 @@
+#!/usr/bin/ruby
+require 'erb'
+name = ARGV.shift
+
+File.open("#{name}.yaml", 'w') do |f|
+  f.puts ERB.new(DATA.read).result(binding)
+end
+
+__END__
+Section: misc
+Priority: optional
+Standards-Version: 3.6.2
+
+Package: <%= name %>
+Version: 0.0.1
+Architecture: all
+# Description:
+# Depends:
+#   - 
+
+# Files:
+#   foo: /etc/hoo
